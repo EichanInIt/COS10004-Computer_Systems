@@ -1,0 +1,14 @@
+      MOV R0, #15
+      STR R0, .WriteUnsignedNum
+      MOV R1, #remain
+      STR R1, .WriteString
+      MOV R1, #line
+      STR R1, .WriteString
+      MOV R1, #removPromp
+      STR R1, .WriteString
+      LDR R2, .InputNum
+      SUB R0, R0, R2
+      HALT
+remain: .ASCIZ "remaining"
+line: .ASCIZ "\n"
+removPromp: .ASCIZ "How many do you want to remove (1-3)?"

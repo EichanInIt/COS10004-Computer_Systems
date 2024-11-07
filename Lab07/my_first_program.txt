@@ -1,0 +1,10 @@
+      MOV R0, #100
+      MOV R1, #25
+      MOV R2, #8
+      MOV R3, #7
+      MOV R4, #3
+      MOV R5, #1
+      ADD R6, R2, R5 
+      ADD R6, R6, R0
+      SUB R6, R6, R1
+      HALT

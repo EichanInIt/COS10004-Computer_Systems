@@ -1,0 +1,77 @@
+      MOV R1, #.PixelScreen
+      MOV R2, #screen2
+      MOV R6, #0
+      MOV R9, #.black
+      MOV R10, #.white
+      MOV R3, #0
+loopWhite: STR R10, [R2+R3]
+      ADD R3, R3, #4
+      CMP R3, #12288
+      BLT loopWhite
+      MOV R3, #260
+randLoop: LDR R0, .Random
+      AND R0, R0, #1
+      CMP R0, #0
+      BNE .+2
+      STR R9, [R2+R3]
+      BL nextCell
+      CMP R3, #12032
+      BLT randLoop
+copyScreen2to1: MOV R3, #0
+copyLoop: LDR R0, [R2+R3]
+      STR R0, [R1+R3]
+      ADD R3, R3, #4
+      CMP R3, #12288
+      BLT copyLoop
+      ADD R6, R6, #1
+      MOV R3, #260
+nextGenLoop: MOV R5, #0
+      SUB R4, R3, #256
+      BL countIfLive
+      SUB R4, R3, #252
+      BL countIfLive
+      ADD R4, R3, #4
+      BL countIfLive
+      ADD R4, R3, #260
+      BL countIfLive
+      ADD R4, R3, #256
+      BL countIfLive
+      ADD R4, R3, #252
+      BL countIfLive
+      SUB R4, R3, #4
+      BL countIfLive
+      SUB R4, R3, #260
+      BL countIfLive
+      CMP R5, #4
+      BLT .+3
+      STR R10, [R2+R3]
+      B continue
+      CMP R5, #3
+      BLT .+3
+      STR R9, [R2+R3]
+      B continue
+      CMP R5, #2
+      BLT .+2
+      B continue
+      STR R10, [R2+R3]
+continue: BL nextCell
+      MOV R0, #12032
+      CMP R3, R0
+      BLT nextGenLoop
+      B copyScreen2to1
+countIfLive: LDR R0, [R1+R4]
+      CMP R0, R10       //White
+      BEQ .+2
+      ADD R5, R5, #1
+      RET
+nextCell:
+      ADD R3, R3, #4
+      AND R0, R3, #255
+      CMP R0, #0
+      BEQ .-3
+      CMP R0, #252
+      BEQ .-5
+      RET
+      HALT
+      .ALIGN 1024
+screen2: 0

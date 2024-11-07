@@ -1,0 +1,20 @@
+      MOV R0, #array
+loop:
+      LDR R3, [R0 + R1]
+      STR R3, .WriteUnsignedNum
+      ADD R1, R1, #4
+      LDR R2, arraysize
+      CMP R1, R2
+      BLT loop
+      HALT
+arraysize: 40
+array: .Word 3
+      2
+      3
+      4
+      5
+      1
+      2
+      1
+      6
+      7

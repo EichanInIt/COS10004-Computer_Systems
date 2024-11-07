@@ -1,0 +1,55 @@
+      MOV R0, #15
+      B DisplayRemain
+DisplayRemain: 
+      STR R0, .WriteUnsignedNum
+      MOV R1, #remain
+      STR R1, .WriteString
+      MOV R1, #line
+      STR R1, .WriteString
+      B Input
+Input:                  //Taking Input and Display InputPrompt
+      MOV R1, #removPromp
+      STR R1, .WriteString
+      MOV R1, #line
+      STR R1, .WriteString 
+      LDR R2, .InputNum 
+//Validate Input With 3
+      CMP R2, #3
+      BGT Invalid
+//Validate Input With 1
+      CMP R2, #1
+      BLT Invalid
+//Validate Input With R0
+      CMP R2, R0
+      BEQ Invalid
+      BGT Invalid
+//Display Input and Calculate Remaining
+      MOV R1, #YouChoose
+      STR R1, .WriteString
+      STR R2, .WriteUnsignedNum
+      MOV R1, #line
+      STR R1,. WriteString
+      SUB R0, R0, R2
+//GameOverValidation
+      CMP R0, #1
+      BGT DisplayRemain
+      BEQ GameOver
+Invalid:
+      MOV R1, #invalidPromp
+      STR R1, .WriteString
+      MOV R1, #line
+      STR R1, .WriteString
+      B Input
+GameOver:
+      MOV R1, #GameOverPrompt
+      STR R1, .WriteString
+      HALT
+remain: .ASCIZ "remaining"
+line: .ASCIZ "\n"
+removPromp: .ASCIZ "How many do you want to remove (1-3)?"
+invalidPromp: .ASCIZ "Invalid Input, please try again (1 to 3 and lower than remaining)"
+GameOverPrompt: .ASCIZ "Game Over"
+YouChoose: .ASCIZ "You choose: "
+// R0 storing MatchStick
+// R1 to Display 
+// R2 to store players' input  

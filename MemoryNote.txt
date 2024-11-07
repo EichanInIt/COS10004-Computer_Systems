@@ -1,0 +1,4 @@
+1 hexadecimal digit = 4 bits
+1 bytes = 2 hexadecimal digits = 8 bits
+1 word = 4 bytes = 8 hexadecimal digits
+
